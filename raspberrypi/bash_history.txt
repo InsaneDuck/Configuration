@@ -1,0 +1,59 @@
+sudo apt update && sudo apt upgrade
+sudo rpi-update
+sudo apt install ntfs-3g neofetch git apt-transport-https fail2ban samba samba-common-bin python3 python3-pip hdparm ffmpeg qbittorrent-nox
+
+sudo mkdir /mnt/usb0
+sudo mount -t ntfs /dev/sda1 /mnt/usb0 -o umask=000
+ls -lt /mnt/usb0/
+sudo blkid
+sudo cp /etc/fstab /etc/fstab.back
+sudo nano /etc/fstab
+
+add to end 
+UUID=44E85631E856220A /mnt/usb0 ntfs defaults,auto,users,rw,nofail,umask=000 0 0
+
+wget https://github.com/MediaBrowser/Emby.Releases/releases/download/4.8.0.7/emby-server-deb_4.8.0.7_arm64.deb
+sudo dpkg -i emby-server-deb_4.8.0.7_arm64.deb
+sudo systemctl status emby-server
+
+sudo nano /etc/samba/smb.conf
+
+add to end
+[insaneduckpi-share]
+ comment=insaneduckpi-share
+ path=/mnt/usb0
+ browseable=Yes
+ writeable=Yes
+ only guest=no
+ create mask=0777
+ directory mask=0777
+ public=no
+
+sudo smbpasswd -a satya
+sudo systemctl enable fail2ban
+sudo nano /etc/fail2ban/jail.conf 
+sudo systemctl restart fail2ban
+
+sudo fail2ban-client status sshd
+sudo fail2ban-client set sshd unbanip 192.168.0.80
+
+sudo fdisk -l
+sudo hdparm -s 0 /dev/sda
+
+sudo curl -fsSL https://deb.nodesource.com/setup_18.x | sudo bash -
+sudo apt install -y nodejs
+
+sudo nano /etc/dhcpcd.conf
+
+add to end
+static domain_name_servers=1.1.1.1 8.8.8.8
+
+sudo service dhcpcd restart
+sudo nano /etc/resolv.conf
+
+crontab -e
+
+add to end
+@reboot /usr/bin/qbittorrent-nox
+
+qbittorrent-nox --webui-port=9092

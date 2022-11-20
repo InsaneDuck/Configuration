@@ -1,0 +1,8 @@
+bspwm
+feh
+polybar
+rofi
+sxhkd
+wmname
+brightnessctl
+eww

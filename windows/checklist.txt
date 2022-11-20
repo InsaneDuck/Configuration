@@ -1,0 +1,47 @@
+skip intel rst
+
+change time zone
+
+change privacy settings
+
+change pc name
+
+deactivate windows driver updates 
+
+armoury crate manual mode
+
+power options
+
+desktop icons
+
+disable quick view in explorer
+
+uninstall unecessary stuff
+
+disable quick boot
+
+disable bitlocker
+
+msi after burner
+
+disable boost mode for graphics card
+
+enable extension in explorer
+
+change powershell to command prompt
+
+custom scaling
+
+rtx voice (optional)
+
+winget
+
+mpv.net
+
+firefox
+
+steam
+
+discord
+
+idm

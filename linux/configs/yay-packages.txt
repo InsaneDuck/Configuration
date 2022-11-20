@@ -1,0 +1,13 @@
+aic94xx-firmware
+chiaki
+cowfortune
+downgrade
+google-chrome
+iriunwebcam-bin
+jetbrains-toolbox
+pamac-aur
+rpi-imager
+timeshift
+upd72020x-fw
+visual-studio-code-bin
+wd719x-firmware

@@ -1,0 +1,4 @@
+eclipse-jee
+teams
+github-desktop
+gnome-browser-connector

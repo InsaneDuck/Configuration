@@ -1,0 +1,3 @@
+[/]
+backup-file-location='file:///home/satya/Github/configuration/linux/configs/extension-sync.json'
+provider='Local'

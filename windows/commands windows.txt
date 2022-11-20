@@ -1,0 +1,6 @@
+Dism.exe /online /enable-feature /featurename:NetFX3 /All /Source:E:\sources\sxs /LimitAccess
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:E:\sources\install.wim
+
+ /high-dpi-support=1 /device-scale-factor=1
+ /high-dpi-support=1 /force-device-scale-factor=1

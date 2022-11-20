@@ -1,0 +1,7 @@
+IOMMU Group 1:
+	00:01.0 PCI bridge [0604]: Intel Corporation 6th-10th Gen Core Processor PCIe Controller (x16) [8086:1901] (rev 02)
+	01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU106M [GeForce RTX 2070 Mobile / Max-Q Refresh] [10de:1f14] (rev a1)
+	01:00.1 Audio device [0403]: NVIDIA Corporation TU106 High Definition Audio Controller [10de:10f9] (rev a1)
+	01:00.2 USB controller [0c03]: NVIDIA Corporation TU106 USB 3.1 Host Controller [10de:1ada] (rev a1)
+	01:00.3 Serial bus controller [0c80]: NVIDIA Corporation TU106 USB Type-C UCSI Controller [10de:1adb] (rev a1)
+
