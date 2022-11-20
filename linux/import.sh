@@ -4,24 +4,11 @@ echo "adding g14 repo"
 echo "installing pacman packages"
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
 
-echo "installing yay"
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-cd ..
-rm -rf yay
+echo "removing packages"
+sh scripts/remove-packages.sh
 
 echo "setting up rust"
 rustup default stable
-
-echo "installing aur packages"
-xargs yay -S --needed --noconfirm < configs/yay-packages.txt
-
-echo "installing flatpak packages"
-sh scripts/flatpak.sh
-
-echo "removing packages"
-sh scripts/remove-packages.sh
 
 echo "setting up bootloader"
 sudo bootctl remove
@@ -37,13 +24,15 @@ sudo usermod -a -G libvirt $(whoami)
 echo "setting up mariadb"
 sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
-echo "setting up synth shell"
-git clone --recursive https://github.com/andresgongora/synth-shell.git
-chmod +x synth-shell/setup.sh
-cd synth-shell
-./setup.sh
+echo "installing yay"
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si --noconfirm
 cd ..
-rm -rf synth-shell
+rm -rf yay
+
+echo "installing aur packages"
+xargs yay -S --needed --noconfirm < configs/yay-packages.txt
 
 echo "enabling installed services"
 sh scripts/services.sh
@@ -55,6 +44,17 @@ dconf reset -f /org/gnome/shell/extensions/extensions-sync/
 dconf load /org/gnome/shell/extensions/extensions-sync/ < /home/satya/Github/configuration/linux/configs/extension-sync-settings.txt
 busctl --user call org.gnome.Shell /io/elhan/ExtensionsSync io.elhan.ExtensionsSync read
 
+echo "installing flatpak packages"
+sh scripts/flatpak.sh
+
 echo "setting up git"
 git config --global user.name "satya"
 git config --global user.email "39309626+InsaneDuck@users.noreply.github.com"
+
+echo "setting up synth shell"
+git clone --recursive https://github.com/andresgongora/synth-shell.git
+chmod +x synth-shell/setup.sh
+cd synth-shell
+./setup.sh
+cd ..
+rm -rf synth-shell
