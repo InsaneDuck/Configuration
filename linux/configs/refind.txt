@@ -2,6 +2,7 @@ menuentry "Arch Linux" {
     icon     /EFI/refind/icons/os_arch.png
     volume   "Arch Linux"
     loader   /vmlinuz-linux
+    initrd   /intel-ucode.img
     initrd   /initramfs-linux.img
     options  "root=/dev/nvme0n1p2 rw rootflags=subvol=@ rootfstype=btrfs intel_pstate=no_hwp"
     submenuentry "Boot using fallback initramfs" {

@@ -1,0 +1,54 @@
+{
+    "additional-repositories": [
+        "multilib"
+    ],
+    "audio": "pipewire",
+    "bootloader": "systemd-bootctl",
+    "config_version": "2.5.1",
+    "debug": false,
+    "desktop-environment": "gnome",
+    "gfx_driver": "Nvidia (proprietary)",
+    "harddrives": [
+        "/dev/nvme0n1"
+    ],
+    "hostname": "insaneduck-arch",
+    "mirror-region": {
+        "United Kingdom": {
+            "http://archlinux.uk.mirror.allworldit.com/archlinux/$repo/os/$arch": true,
+            "http://lon.mirror.rackspace.com/archlinux/$repo/os/$arch": true,
+            "http://mirror.bytemark.co.uk/archlinux/$repo/os/$arch": true,
+            "http://mirror.netweaver.uk/archlinux/$repo/os/$arch": true,
+            "http://mirrors.manchester.m247.com/arch-linux/$repo/os/$arch": true,
+            "http://mirrors.melbourne.co.uk/archlinux/$repo/os/$arch": true,
+            "http://www.mirrorservice.org/sites/ftp.archlinux.org/$repo/os/$arch": true,
+            "https://archlinux.uk.mirror.allworldit.com/archlinux/$repo/os/$arch": true,
+            "https://lon.mirror.rackspace.com/archlinux/$repo/os/$arch": true,
+            "https://mirror.bytemark.co.uk/archlinux/$repo/os/$arch": true,
+            "https://mirror.netweaver.uk/archlinux/$repo/os/$arch": true,
+            "https://mirrors.melbourne.co.uk/archlinux/$repo/os/$arch": true,
+            "https://www.mirrorservice.org/sites/ftp.archlinux.org/$repo/os/$arch": true
+        }
+    },
+    "nic": {
+        "dhcp": true,
+        "dns": null,
+        "gateway": null,
+        "iface": null,
+        "ip": null,
+        "type": "nm"
+    },
+    "no_pkg_lookups": false,
+    "offline": false,
+    "packages": [
+        "firefox",
+        "git"
+    ],
+    "profile": {
+        "path": "/usr/lib/python3.10/site-packages/archinstall/profiles/desktop.py"
+    },
+    "script": "guided",
+    "silent": false,
+    "swap": false,
+    "timezone": "Europe/London",
+    "version": "2.5.1"
+}
