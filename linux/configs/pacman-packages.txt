@@ -91,4 +91,5 @@ vulkan-mesa-layers
 wget
 yarn
 youtube-dl
-
+tree
+snapper

@@ -11,3 +11,5 @@ timeshift
 upd72020x-fw
 visual-studio-code-bin
 wd719x-firmware
+refind-btrfs
+btrfs-assistant
