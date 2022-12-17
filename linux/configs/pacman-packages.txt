@@ -89,6 +89,7 @@ vlc
 vulkan-intel
 vulkan-mesa-layers
 wget
+wine
 yarn
 youtube-dl
 tree
