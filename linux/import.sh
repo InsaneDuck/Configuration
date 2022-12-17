@@ -14,7 +14,11 @@ echo "setting up bootloader"
 sudo bootctl remove
 sudo refind-install
 sudo mkdir -p /boot/EFI/refind/drivers_x64
+sudo mkdir -p /boot/EFI/refind/themes
 sudo cp /usr/share/refind/drivers_x64/btrfs_x64.efi /boot/EFI/refind/drivers_x64/btrfs_x64.efi
+sudo cp configs/refind-theme-regular /boot/EFI/refind/themes
+sudo sh -c "echo '# Load rEFInd theme Regular' >> /boot/EFI/refind/refind.conf"
+sudo sh -c "echo 'include themes/refind-theme-regular/theme.conf' >> /boot/EFI/refind/refind.conf"
 
 echo "setting up user-groups"
 sudo usermod -aG docker ${USER}

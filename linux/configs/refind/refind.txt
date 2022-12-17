@@ -1,2 +1,0 @@
-# Load rEFInd theme Regular
-include themes/refind-theme-regular/theme.conf
