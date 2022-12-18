@@ -1,3 +1,7 @@
+#!/bin/bash
+#to exit script if any command fails
+set -e
+
 # Check if repository is already present
 if grep -q "g14" /etc/pacman.conf; then
   echogre "g14 Repository already present"
@@ -42,8 +46,8 @@ sudo mkdir -p /boot/EFI/refind/drivers_x64
 sudo mkdir -p /boot/EFI/refind/themes
 sudo cp /usr/share/refind/drivers_x64/btrfs_x64.efi /boot/EFI/refind/drivers_x64/btrfs_x64.efi
 sudo cp configs/refind-theme-regular /boot/EFI/refind/themes
-#sudo sh -c "echo '# Load rEFInd theme Regular' >> /boot/EFI/refind/refind.conf"
-#sudo sh -c "echo 'include themes/refind-theme-regular/theme.conf' >> /boot/EFI/refind/refind.conf"
+echo "# Load rEFInd theme Regular" | sudo tee -a /boot/EFI/refind/refind.conf
+echo "include themes/refind-theme-regular/theme.conf" | sudo tee -a /boot/EFI/refind/refind.conf
 
 echo "setting up user-groups"
 sudo usermod -aG docker ${USER}
