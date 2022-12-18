@@ -45,7 +45,7 @@ sudo refind-install
 sudo mkdir -p /boot/EFI/refind/drivers_x64
 sudo mkdir -p /boot/EFI/refind/themes
 sudo cp /usr/share/refind/drivers_x64/btrfs_x64.efi /boot/EFI/refind/drivers_x64/btrfs_x64.efi
-sudo cp configs/refind-theme-regular /boot/EFI/refind/themes
+sudo cp -r configs/refind-theme-regular /boot/EFI/refind/themes
 echo "# Load rEFInd theme Regular" | sudo tee -a /boot/EFI/refind/refind.conf
 echo "include themes/refind-theme-regular/theme.conf" | sudo tee -a /boot/EFI/refind/refind.conf
 
@@ -58,11 +58,17 @@ echo "setting up mariadb"
 sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
 echo "installing yay"
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
-cd ..
-rm -rf yay
+# Check if yay is installed
+if ! command -v yay &> /dev/null; then
+  # Install yay
+  git clone https://aur.archlinux.org/yay.git
+  cd yay
+  makepkg -si --noconfirm
+  cd ..
+  rm -rf yay
+else
+  echo "yay is already installed"
+fi
 
 echo "installing aur packages"
 xargs yay -S --needed --noconfirm < configs/yay-packages.txt
