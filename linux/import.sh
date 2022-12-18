@@ -1,5 +1,5 @@
 echo "adding g14 repo"
-#sh scripts/add-g14-repo.sh
+sh scripts/add-g14-repo.sh
 
 echo "installing pacman packages"
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
@@ -17,8 +17,8 @@ sudo mkdir -p /boot/EFI/refind/drivers_x64
 sudo mkdir -p /boot/EFI/refind/themes
 sudo cp /usr/share/refind/drivers_x64/btrfs_x64.efi /boot/EFI/refind/drivers_x64/btrfs_x64.efi
 sudo cp configs/refind-theme-regular /boot/EFI/refind/themes
-sudo sh -c "echo '# Load rEFInd theme Regular' >> /boot/EFI/refind/refind.conf"
-sudo sh -c "echo 'include themes/refind-theme-regular/theme.conf' >> /boot/EFI/refind/refind.conf"
+#sudo sh -c "echo '# Load rEFInd theme Regular' >> /boot/EFI/refind/refind.conf"
+#sudo sh -c "echo 'include themes/refind-theme-regular/theme.conf' >> /boot/EFI/refind/refind.conf"
 
 echo "setting up user-groups"
 sudo usermod -aG docker ${USER}
@@ -55,10 +55,10 @@ echo "setting up git"
 git config --global user.name "satya"
 git config --global user.email "39309626+InsaneDuck@users.noreply.github.com"
 
-echo "setting up synth shell"
-git clone --recursive https://github.com/andresgongora/synth-shell.git
-chmod +x synth-shell/setup.sh
-cd synth-shell
-./setup.sh
-cd ..
-rm -rf synth-shell
+#echo "setting up synth shell"
+#git clone --recursive https://github.com/andresgongora/synth-shell.git
+#chmod +x synth-shell/setup.sh
+#cd synth-shell
+#./setup.sh
+#cd ..
+#rm -rf synth-shell
