@@ -1,8 +1,17 @@
-echo "adding g14 repo"
-sudo sh -c "echo '[g14]' >> /etc/pacman.conf"
-sudo sh -c "echo 'SigLevel = DatabaseNever Optional TrustAll' >> /etc/pacman.conf"
-sudo sh -c "echo 'Server = https://arch.asus-linux.org' >> /etc/pacman.conf"
-sudo pacman -Syu
+# Check if repository is already present
+if grep -q "g14" /etc/pacman.conf; then
+  echogre "g14 Repository already present"
+else
+  # Add repository to pacman configuration file
+  echo "" | sudo tee -a /etc/pacman.conf
+  echo "#asus-linux repository" | sudo tee -a /etc/pacman.conf
+  echo "[g14]" | sudo tee -a /etc/pacman.conf
+  echo "SigLevel = DatabaseNever Optional TrustAll" | sudo tee -a /etc/pacman.conf
+  echo "Server = https://arch.asus-linux.org" | sudo tee -a /etc/pacman.conf
+  echo "g14 Repository added"
+  # Update package database
+  sudo pacman -Sy
+fi
 
 echo "installing pacman packages"
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
