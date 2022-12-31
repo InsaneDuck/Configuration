@@ -4,7 +4,7 @@ set -e
 
 # Check if repository is already present
 if grep -q "g14" /etc/pacman.conf; then
-  echogre "g14 Repository already present"
+  echo "g14 Repository already present"
 else
   # Add repository to pacman configuration file
   echo "" | sudo tee -a /etc/pacman.conf
@@ -50,9 +50,9 @@ echo "# Load rEFInd theme Regular" | sudo tee -a /boot/EFI/refind/refind.conf
 echo "include themes/refind-theme-regular/theme.conf" | sudo tee -a /boot/EFI/refind/refind.conf
 
 echo "setting up user-groups"
-sudo usermod -aG docker ${USER}
-sudo usermod -a -G kvm $(whoami)
-sudo usermod -a -G libvirt $(whoami)
+sudo usermod -aG docker "${USER}"
+sudo usermod -a -G kvm "$(whoami)"
+sudo usermod -a -G libvirt "$(whoami)"
 
 echo "setting up mariadb"
 sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
