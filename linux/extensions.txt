@@ -1,0 +1,50 @@
+Installed Extensions
+AppIndicator and KStatusNotifierItem Support by 3v1n0
+
+Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
+Applications Menu by fmuellner
+
+Add a category-based menu for applications.
+Auto Move Windows by fmuellner
+
+Move applications to specific workspaces when they create windows.
+Blur my Shell by aunetx
+
+Adds a blur look to different parts of the GNOME Shell, including the top panel, dash and overview.
+Dash to Panel by charlesg99
+
+An icon taskbar for the Gnome Shell. This extension moves the dash into the gnome main panel so that the application launchers and system tray are combined into a single panel, similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer needed for easy access to running and favorited applications.
+Launch new instance by fmuellner
+
+Always launch a new instance when clicking in the dash or the application view.
+Native Window Placement by fmuellner
+
+Arrange windows in overview in a more compact way.
+Places Status Indicator by fmuellner
+
+Add a menu for quickly navigating places in the system.
+Removable Drive Menu by fmuellner
+
+A status menu for accessing and unmounting removable devices.
+Screenshot Window Sizer by fmuellner
+
+Resize windows for GNOME Software screenshots
+Sound Input & Output Device Chooser by kgshank
+
+Shows a list of sound output and input devices (similar to gnome sound settings) in the status menu below the volume slider. Various active ports like HDMI , Speakers etc. of the same device are also displayed for selection. V20+ needs python as dependency. If you want to continue with the old method without Python, use options to switch off New Port identification. But it works with only English
+Unite by hardpixel
+
+Unite is a GNOME Shell extension which makes a few layout tweaks to the top panel and removes window decorations to make it look like Ubuntu Unity Shell.
+User Themes by fmuellner
+
+Load shell themes from user directory.
+Window List by fmuellner
+
+Display a window list at the bottom of the screen.
+windowNavigator by fmuellner
+
+Allow keyboard selection of windows and workspaces in overlay mode. <Ctrl>number selects a workspace, and <Alt>number selects a window.
+Workspace Indicator by fmuellner
+
+Put an indicator on the panel signaling in which workspace you are, and give you the possibility of switching to another one.
+

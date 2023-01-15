@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-us"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Asus Zephyrus M15 (2020) Hackintosh · TMSTweaks</title>
+  <meta name="description" content="My experiences and guide for running OpenCore on my Asus Zephyrus M15.">
+  <link rel="stylesheet" href="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/normalize.css">
+  <link rel="stylesheet" href="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/katex.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  
+  
+  
+  
+  <link href="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/concated.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background: #ecedef url("https://www.tmstweaks.com/img/bg.png") repeat;
+    }
+  </style>
+</head>
+
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="https://www.tmstweaks.com/" class="nav-text">TMSTweaks</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="https://www.tmstweaks.com/" class="hamburger-menu-overlay-link">Home</a></li>
+      <li><a href="https://www.tmstweaks.com/post/2020/about/" class="hamburger-menu-overlay-link">About</a></li>
+      
+      <li><a href="https://www.tmstweaks.com/categories/apple/" class="hamburger-menu-overlay-link">Apple</a></li>
+      
+      <li><a href="https://www.tmstweaks.com/categories/hackintosh/" class="hamburger-menu-overlay-link">Hackintosh</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+          <h1 class="post-title">Asus Zephyrus M15 (2020) Hackintosh</h1>
+          <p class="post-date">Posted <time datetime="2020-08-18">Aug 18, 2020</time></p>
+        </header>
+        <picture class="post-figure">
+          
+          
+          <source srcset="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/Asus-Zephyrus-M15-Hackintosh_hu87d420ba274da0dd38364ffc5be9c.jpg 1x">
+          <img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/Asus-Zephyrus-M15-Hackintosh_hu87d420ba274da0dd38364ffc5be9c.jpg" alt="Guide on how to turn the ASUS Zephyrus M15 into a Hackintosh">
+        </picture>
+        <h2>Contents</h2>
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a>
+      <ul>
+        <li><a href="#things-you-will-need">Things you will need</a></li>
+      </ul>
+    </li>
+    <li><a href="#setting-up-opencore">Setting Up OpenCore</a>
+      <ul>
+        <li><a href="#gathering-the-files">Gathering The Files</a></li>
+        <li><a href="#creating-the-usb-installer">Creating the USB Installer</a></li>
+        <li><a href="#adding-opencore-files-to-your-usb">Adding OpenCore files to your USB</a></li>
+        <li><a href="#adding-the-proper-kexts">Adding the Proper Kexts</a></li>
+        <li><a href="#creating-the-proper-ssdt-files">Creating the proper SSDT files</a></li>
+        <li><a href="#creating-your-configplist-file">Creating your config.plist file</a></li>
+      </ul>
+    </li>
+    <li><a href="#necessary-bios-settings">Necessary BIOS Settings</a></li>
+    <li><a href="#installing-macos">Installing macOS</a>
+      <ul>
+        <li><a href="#navigating-the-macos-installer">Navigating the macOS Installer</a></li>
+      </ul>
+    </li>
+    <li><a href="#fixing-necessary-things">Fixing Necessary Things</a>
+      <ul>
+        <li><a href="#audio">Audio</a></li>
+        <li><a href="#cpu-power-management">CPU Power Management</a></li>
+        <li><a href="#trackpad">Trackpad</a></li>
+        <li><a href="#wifibluetooth">WIFI/Bluetooth</a></li>
+      </ul>
+    </li>
+    <li><a href="#finalizing-things">Finalizing Things</a>
+      <ul>
+        <li><a href="#moving-efi-to-you-macos-disk">Moving EFI to you macOS Disk</a></li>
+        <li><a href="#final-notes">Final Notes</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        <h2 id="intro">Intro</h2>
+<p>So you’ve bought yourself an Asus Zephyrus M15 laptop.  You’ve just 
+opened your brand new laptop and booted up straight to Windows ready to 
+play some games. For $1500, you get yourself a Six Core 10th generation 
+i7-10750H processor and RTX 2070 graphics. Something seems missing, 
+however.</p>
+<p>Despite all the positives of this laptop, if you’re like me and 
+coming from a Macbook Pro, it means you have to give up all of your 
+productivity tools on macOS. You also lose the ability to use XCode for 
+Apple Development. Fear not! Modern Hackintosh solutions allow a user to
+ install macOS on pretty much any hardware.</p>
+<p>OpenCore, a modern <em>bootloader</em>, is what handles all of the 
+software injection into macOS. See, our hardware itself does not play 
+nicely with macOS so there are a series of patches, kexts (think drivers
+ on Windows), and other system files that need to be loaded into macOS 
+before booting can occur. OpenCore handles most of the work for us, and 
+is actually really easy to get working.</p>
+<h3 id="things-you-will-need">Things you will need</h3>
+<ol>
+<li>A spare USB drive that is at <strong>least</strong> 8GB
+<ul>
+<li>This is used to contain our OpenCore files as well as the macOS installer</li>
+</ul>
+</li>
+<li>A separate boot drive to install macOS on to
+<ul>
+<li>I used a 1TB Sabrent Rocket Q M.2 SSD that I installed in the laptop. It can be purchased <a href="https://www.amazon.com/Sabrent-Rocket-Internal-Performance-SB-RKTQ-1TB/dp/B07ZZYWTBP/ref=sr_1_3?dchild=1&amp;keywords=1tb+m.2+ssd&amp;qid=1597786671&amp;sr=8-3">here</a></li>
+</ul>
+</li>
+<li>A USB WIFI Adapter
+<ul>
+<li><em>This is not necessary as you can use the built in WIFI card. It 
+is just less stable at the time of this writing. More on this in the 
+WIFI section.</em></li>
+</ul>
+</li>
+<li>A seperate computer
+<ul>
+<li>You can use the Windows install on this laptop to do the setup.</li>
+<li><em>If your seperate computer is running Windows and <strong>NOT</strong> macOS you will need an <strong>ethernet</strong> connection as the tools on Windows do not fully download the macOS installer.</em></li>
+</ul>
+</li>
+<li>A USB Mouse
+<ul>
+<li>This is needed to complete the macOS install and to configure our Trackpad.</li>
+</ul>
+</li>
+</ol>
+<h2 id="setting-up-opencore">Setting Up OpenCore</h2>
+<p>To begin, I would highly recommend checking out <strong><a href="https://dortania.github.io/OpenCore-Install-Guide/">Dortania’s OpenCore Install Guide</a></strong>,
+ which contains a comprehensive guide on how to get OpenCore and macOS 
+running on almost any hardware. I followed this guide when creating my 
+config files, and when deciding what kexts to install. If <strong>anything</strong> from this guide is confusing to you, please check out Dortania’s guide first as the explanation may be there.</p>
+<p>With that out of the way, lets begin with creating our USB.</p>
+<hr>
+<h3 id="gathering-the-files">Gathering The Files</h3>
+<p>To begin, lets download the OpenCore files from the repository. Download this zip file and unzip it onto your computer.</p>
+<h4 id="opencore">OpenCore</h4>
+<ul>
+<li><a href="https://github.com/acidanthera/OpenCorePkg/releases">OpenCorePkg</a>
+<ul>
+<li>I highly recommend downloading the debug version for better debugging if things go wrong.</li>
+</ul>
+</li>
+</ul>
+<h4 id="propertree">ProperTree</h4>
+<p>Next, we need a plist editor. Most of the work in setting up OpenCore
+ comes with editing our config.plist file. Dortania’s guide and myself 
+recommend <a href="https://github.com/corpnewt/ProperTree">ProperTree</a>, as it has basic OpenCore features baked into it. You’re going to get out your terminal of choice for this one.</p>
+<p><strong>ProperTree for macOS</strong>:</p>
+<pre><code>git clone https://github.com/corpnewt/ProperTree
+cd ProperTree
+chmod +x ProperTree.command
+./ProperTree.command
+</code></pre><p><strong>ProperTree for Windows</strong>:</p>
+<pre><code>git clone https://github.com/corpnewt/ProperTree
+cd ProperTree
+./ProperTree/ProperTree.bat
+</code></pre><p>If you want to launch ProperTree without using the 
+command line, navigate to the folder that the repository was cloned to 
+and double click the ProperTree.command file (ProperTree.bat on 
+Windows).</p>
+<h4 id="gibmacos">GibMacOS</h4>
+<p>Next we’re going to want <a href="https://github.com/corpnewt/gibMacOS">GibMacOS</a>.
+GibMacOS is a tool that can be used to download macOS on non-macOS 
+computers. If you are on macOS you do not need GibMacOS, but it can be 
+helpful if you want a specific version. Open up command line again and 
+get to work.</p>
+<pre><code>git clone https://github.com/corpnewt/gibMacOS
+cd gibMacOS
+./gibMacOS.command
+</code></pre><p><code>./gibMacOS.bat</code> on Windows computers.
+Now that you have all of the required files, lets start making the USB.</p>
+<h4 id="mountefi">MountEFI</h4>
+<p>This is needed to mount the EFI partition on both the USB drive and the macOS system. <em>This is generally only needed for macOS as gibMacOS will mount EFI on Windows.</em></p>
+<pre><code>git clone https://github.com/corpnewt/MountEFI
+cd MountEFI
+chmod +x MountEFI.command
+</code></pre><p>You can run MountEFI by either double-clicking on MountEFI.command or by <code>./MountEFI.command</code>.</p>
+<hr>
+<h3 id="creating-the-usb-installer">Creating the USB Installer</h3>
+<p>Again, I really recommend using <a href="https://dortania.github.io/OpenCore-Install-Guide/">Dortania’s guide</a>
+ for this as it will go into much more detail than I will here. Most of 
+the process that I have outlined here has come from the guide. Alas, if 
+you want a guide specific to this laptop, continue on.</p>
+<ul>
+<li>Plug your blank USB into the computer.
+<ul>
+<li><strong>THIS WILL COMPLETELY WIPE YOUR USB</strong></li>
+</ul>
+</li>
+<li>Launch gibMacOS.command (.bat on Windows)</li>
+<li>You will be greeted with a screen that looks like this:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/gibMacOS.jpg" alt="gibMacOS"></li>
+<li>You can explore the different options to configure the install how you want.
+<ul>
+<li>If you’re on Windows, you must press <code>R</code> and enter to toggle RecoveryOnly.</li>
+</ul>
+</li>
+<li>Press the number of the version you are looking for.
+<ul>
+<li>I pressed <code>1</code> and enter to download the most recent version of Catalina 10.15.6</li>
+</ul>
+</li>
+<li>When the file is finished downloading, it will be in the <code>gibMacOS/publicrelease/</code> folder.</li>
+</ul>
+<p>Now we’re going to create the macOS installer.</p>
+<ul>
+<li>Double click <code>BuildmacOSInstallApp.command</code>.</li>
+<li>Drag and drop the folder in the publcrelease folder to the command window.</li>
+<li>Press enter to build the macOS install app.</li>
+<li>Drag the app in the gibMacOS folder to your Applications folder (this makes things easier later on).</li>
+</ul>
+<p>Now we’re going to format the USB drive. This process is slightly 
+different on macOS and on Windows. For this, I will show the mac 
+version, but you can see how to do it on <em>Windows</em> <a href="https://dortania.github.io/OpenCore-Install-Guide/installer-guide/winblows-install.html#making-the-installer">here</a>. You can skip the rest of the steps in the <strong>Creating the USB Installer</strong> section if you are on Windows.</p>
+<ul>
+<li>Plug your USB drive into your Mac.</li>
+<li>Launch Disk Utility.</li>
+<li>Press <code>CMD</code> and <code>2</code> to show all volumes and click on the USB (San Disk Cruizer in my case) <strong>NOT</strong> the partition.</li>
+<li>Click Erase in the top middle.</li>
+<li>Enter the options as shown below:
+<ul>
+<li>The name can be anything, but we will use <code>USB</code> for this guide.</li>
+</ul>
+</li>
+</ul>
+<p><img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/diskutility.jpg" alt="Disk Utility">
+Finally, we are going to put the macOS install app on the USB drive. 
+This is not as simple as dragging and dropping, but thankfully Apple has
+ create a nice tool to do this for us.</p>
+<ul>
+<li>Open up a terminal window and run the following command:</li>
+</ul>
+<pre><code>sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/USB
+</code></pre><p><strong>Note, if your macOS install app is not in the 
+Applications folder you will need to modify the path to the Application.
+ Also, if your USB drive is not named <code>USB</code>, you need to change the name in the command.</strong></p>
+<p>Finally, we are going to mount the EFI partition to get set up with OpenCore.</p>
+<ul>
+<li>Run MountEFI.command
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/mountefi.jpg" alt="MountEFI"></li>
+<li>Enter the number that corresponds with your USB drive and press enter.</li>
+</ul>
+<p>This will mount the EFI partition of your USB drive to your computer.
+ Make sure your EFI partition is empty. If it is not empty, you likely 
+mounted the wrong EFI partition.</p>
+<hr>
+<h3 id="adding-opencore-files-to-your-usb">Adding OpenCore files to your USB</h3>
+<p>Now that you have the EFI partition mounted, you need to add the OpenCore files to the USB. <em>Note: If you are on Windows and followed Dortania’s guide, you can skip this entirely.</em></p>
+<ul>
+<li>Unzip the OpenCorePkg file that you downloaded.</li>
+<li>Move the EFI folder from the OpenCorePkg folder to the root of the EFI partition on your USB.</li>
+<li>Navigate to the <code>EFI/OC/Drivers</code> folder on your USB EFI partition and delete everything except <code>HsfPlus.efi</code> and <code>OpenRuntime.efi</code>.</li>
+<li>Delete everything in the <code>EFI/OC/Tools</code> folder except <code>OpenShell.efi</code>.</li>
+<li>Heres what the EFI should look like when you’re done:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/cleanefi.jpg" alt="CleanEFI"></li>
+</ul>
+<hr>
+<h3 id="adding-the-proper-kexts">Adding the Proper Kexts</h3>
+<p>With the OpenCore files properly added to your EFI partition, it is 
+time to grab the kexts (think drivers on Windows) that MacOS needs to 
+function. Add these to the <code>EFI/OC/Kexts/</code> folder.</p>
+<ul>
+<li><a href="https://github.com/acidanthera/VirtualSMC/releases">VirtualSMC</a>
+<ul>
+<li>This is required for macOS to boot. It emulates the SMC chip found on real Macs. No Hackintosh will boot without this kext.</li>
+<li>You may notice that there are many other kexts that come with this download. You are also going to want to install <code>SMCProcessor.kext</code>, <code>SMCBatteryManager.kext</code>, and <code>SMCSuperIO.kext</code>.
+<ul>
+<li>These will be used to enable temperature monitoring, fan control and
+ checking, and battery management which is required for getting the 
+trackpad to work.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://github.com/acidanthera/Lilu/releases">Lilu</a>
+<ul>
+<li>This does a lot of patching that is required by other kexts that our Asus laptop requires.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Graphics</strong></p>
+<ul>
+<li><a href="https://github.com/acidanthera/WhateverGreen/releases">WhateverGreen</a>
+<ul>
+<li>This is needed for patching a lot of things related to graphics. This includes a file named <code>SSDT-PNLF.dsl</code>. Do not use this file, as we make our own later.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Audio</strong></p>
+<ul>
+<li><a href="https://github.com/acidanthera/AppleALC/releases">AppleALC</a>
+<ul>
+<li>This is needed to patch the AppleHDA kext to work with our audio so 
+we can get audio through our system speakers and microphone input. More 
+with this later.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Ethernet</strong></p>
+<ul>
+<li><a href="https://github.com/Mieze/RTL8111_driver_for_OS_X/releases">RealtekRTL8111</a>
+<ul>
+<li>This is needed to get ethernet working on our machine. This is needed if installing using a Windows-created macOS installer.</li>
+</ul>
+</li>
+</ul>
+<p><strong>WIFI</strong></p>
+<ul>
+<li>Do not download a kext for this now, we will manage this later.</li>
+</ul>
+<p><strong>Extra</strong></p>
+<ul>
+<li><a href="https://github.com/lvs1974/CpuTscSync">CpuTscSync</a>
+<ul>
+<li>This is needed for our specific laptop. It makes sure that our TSC 
+can sync. If you don’t know what this means, don’t worry about it just 
+install the kext.</li>
+</ul>
+</li>
+<li><a href="https://github.com/acidanthera/NVMeFix/releases">NVMeFix</a>
+<ul>
+<li>This is needed for macOS to be able to recognize NVMe drives that 
+are not Apple drives. This is needed (at least for me) as I installed an
+ after market NVMe SSD. You will likely need this as well.</li>
+</ul>
+</li>
+<li><a href="https://github.com/al3xtjames/NoTouchID/releases">NoTouchID</a>
+<ul>
+<li>This is needed to disable TouchID, as our mac will look like a 2019 Macbook Pro and does not have a TouchID sensor.</li>
+<li>Without this kext, macOS will not function.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Input Kexts</strong></p>
+<ul>
+<li><a href="https://github.com/acidanthera/VoodooPS2/releases">VoodooPS2</a>
+<ul>
+<li>This is needed to get our keyboard functioning.</li>
+<li>Place VoodooPS2Controller in the <code>EFI/OC/Kexts</code> folder.</li>
+</ul>
+</li>
+<li><a href="https://github.com/VoodooI2C/VoodooI2C/releases">VoodooI2C</a>
+<ul>
+<li>This is needed to get our trackpad working.</li>
+<li>Along with <code>VoodooI2C.kext</code>, add <code>VoodooI2CHID.kext</code> to your kexts folder as well.</li>
+<li>This is by <strong>FAR</strong> the hardest thing to set up with our laptop. For now, just add the kext.</li>
+</ul>
+</li>
+</ul>
+<p><img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/kextfolder.jpg" alt="Kext’s Folder">
+This is what my kexts folder looks like at the <strong>VERY</strong> end of the guide. For now, you can ignore some of the additional kexts as we will configure those later.</p>
+<hr>
+<h3 id="creating-the-proper-ssdt-files">Creating the proper SSDT files</h3>
+<p>So, you’ve just added all of the kexts to your kexts folder and you 
+think this is pretty easy so far. Now, let me give you some background 
+into what SSDT’s really are. Every computer has a BIOS. The bios 
+communicates a certain file to each operating system called a <code>DSDT</code>
+ file. This allows the operating system to communicate with the actual 
+hardware that our computer has. Unfortunately for us, ASUS makes the 
+DSDT file to work with Windows and <strong>NOT</strong> macOS. SSDT files are basically patches that allow macOS to communicate with our hardware.</p>
+<p>Dortania’s guide goes over in detail how to make SSDT patches for 
+every device. It is honestly pretty easy to follow, but it is too 
+complex for me to go over in this guide. If you would like to make your 
+own SSDT files, I will link you to where you can learn to make <a href="https://dortania.github.io/Getting-Started-With-ACPI/">them</a>.</p>
+<p>This Laptop’s CPU is Comet Lake, so follow the Comet Lake section of the guide.
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/ssdtguide.jpg" alt="SSDT Guide"></p>
+<ul>
+<li>Make <code>SSDT-GPI0</code> and <code>SSDT-XOSI</code> under the SSDT-GPI0 section of the guide.</li>
+<li>You also need to make RHUB, even though it does not fit under the Comet Lake section of the guide.</li>
+<li>There is one additional SSDT we need to make to get the trackpad 
+functioning, I will go over that in the Trackpad section of this guide.</li>
+</ul>
+<p>If you do not want to make your own SSDT’s I will include my SSDT’s <a href="https://github.com/TMSTweaks/ASUS-Zephyrus-M15-Hackintosh/tree/master/SSDT">here</a>.</p>
+<hr>
+<h3 id="creating-your-configplist-file">Creating your config.plist file</h3>
+<p>The <code>config.plist</code> file is what tells OpenCore what to do 
+with our system and what to patch. There is a VERY good explanation 
+available on Dortania’s Guide so I will not be helping you create your 
+config.plist in this guide. Regardless, there are some steps to take to 
+get started with making your <code>config.plist</code>. I will also go over some specific changes from the guide that is needed for this laptop.</p>
+<ul>
+<li>Go into the <code>OpenCorePkg</code> folder that you downloaded and copy the <code>sample.plist</code> file from the <code>Docs</code> folder into <code>EFI/OC</code>.</li>
+<li>Rename this file to <code>config.plist</code>.</li>
+<li>Open <code>ProperTree.command</code> in the ProperTree folder you downloaded.</li>
+<li>Press <code>File &gt; Open</code> and then select your new config.plist.</li>
+<li>Press <code>File &gt; OC Clean Snapshot</code> and select your OC folder on your EFI partition.
+<ul>
+<li>This will clean up your config file and include all of the kexts and SSDT files you put in your OC folder.</li>
+</ul>
+</li>
+<li>Press <code>File &gt; Save</code> to save the file.</li>
+</ul>
+<p>You’re now ready to follow the <a href="https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/coffee-lake-plus.html#starting-point">Cofee Lake Plus</a> section of the Dortania Guide.</p>
+<h4 id="some-notes-that-are-different-from-the-guide">Some notes that are different from the guide</h4>
+<ul>
+<li>At the very top of the ACPI section, make sure you follow the SSDT 
+XOSI rename part even though you are using SSDT-GPI0 and SSDT-XOSI.</li>
+<li>Turn off <code>SetupVirtualMap</code> in the <code>Booter</code> section.
+<ul>
+<li>If this is on, your system will not boot.</li>
+</ul>
+</li>
+<li>Under <code>DeviceProperties</code>, you need to put the values in the screenshot below for graphics to be working properly:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/deviceproperties.jpg" alt="DeviceProperties"></li>
+<li>Under <code>Kernel &gt; Quirks</code> make sure <code>AppleCpuPmCfgLock</code>, <code>AppleXcpmCfgLock</code>, and <code>DisableIOMapper</code> are enabled.
+<ul>
+<li>This is required as there is no way to change these settings in the BIOS on our computer.</li>
+</ul>
+</li>
+<li>Under <code>Misc &gt; Security</code> set <code>AllowNVRAMReset</code> to false.
+<ul>
+<li>I have not tried it with this option enabled, but reseting the NVRAM
+ could cause problems on this laptop that may not be able to be 
+reversed.</li>
+</ul>
+</li>
+<li>Under <code>NVRAM &gt; Add &gt; 7C436110-AB2A-4BBB-A880-FE41995C9F82 &gt; boot-args</code>, use these boot arguments:
+<ul>
+<li><code>-v debug=0x100 keepsyms=1 -wegnoegpu alcid=13</code></li>
+<li>This will enable verbose mode (so you can see the entire process of 
+booting to diagnose errors), enable debug mode, and turn off the NVIDIA 
+GPU in our system.</li>
+<li>This also sets the audio device layout so our speakers can work with macOS.</li>
+</ul>
+</li>
+<li>When creating your SMBIOS under <code>PlatformInfo</code>, make sure you select <code>MacbookPro16,1</code>. It is most compatible with the parts in this laptop.</li>
+</ul>
+<p>If things go wrong after following this guide, and your system won’t boot, try looking at the <a href="https://dortania.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html#general-troubleshooting">Troubleshooting</a> section of the Dortania Guide. I will <strong>NOT</strong> post by <code>config.plist</code> as I feel that it is <em>very</em> important for people to try and make their own <code>config.plist</code> to learn more about the system. It is not as hard as you may think at first.</p>
+<hr>
+<h2 id="necessary-bios-settings">Necessary BIOS Settings</h2>
+<p>There are some settings in the BIOS that need to be changed to allow 
+our hardware to work with macOS. Some of them were changed in the <code>Kernel</code> section of our <code>config.plist</code> as these options are not available in the bios.</p>
+<ul>
+<li>Completely shut down your Laptop</li>
+<li>Press the power button and immediately hold down the F2 key
+<ul>
+<li>This will bring you into the BIOS</li>
+</ul>
+</li>
+<li>Press <code>F7</code> to go to the advanced settings.
+<ul>
+<li>Navigate around this menu using the keyboard and arrow keys.</li>
+</ul>
+</li>
+<li>Go to <code>Advanced &gt; SATA</code> and change the option from <code>Intel</code> to <code>ACPI</code>.
+<ul>
+<li>When you want to boot back into Windows, change this option back to <code>Intel</code>.</li>
+</ul>
+</li>
+<li>Go to <code>Advanced &gt; DVMT Pre-Allocated Graphics</code> and change this to <code>64MB</code>.</li>
+<li>Go to <code>Boot &gt; Secure Boot</code> and turn off <code>Secure Boot</code>.
+<ul>
+<li>This will affect your ability to boot Windows.</li>
+<li>You cannot boot the default Windows install with this option off. If
+ you want to fix this, you can boot into Windows and turn off Bitlocker.</li>
+</ul>
+</li>
+</ul>
+<p>With these settings changed, you should be ready to go to boot the macOS installer!</p>
+<hr>
+<h2 id="installing-macos">Installing macOS</h2>
+<p>With all of this finished, you’re ready to install macOS.</p>
+<ul>
+<li>Shutdown the Laptop.</li>
+<li>Plug the USB into the laptop.</li>
+<li>Press <code>F2</code> while booting to enter the BIOS.</li>
+<li>Press <code>F8</code> to open the boot menu.</li>
+<li>Select either your USB EFI or <code>OpenCore</code> from the boot menu.</li>
+<li>You will likely see these options:
+<ol>
+<li>Windows</li>
+<li>macOS Base System (External) / Install macOS Catalina (External)</li>
+<li>OpenShell.</li>
+</ol>
+</li>
+<li>Select <code>Option 2.</code> from the menu that corresponds to the macOS installer.</li>
+</ul>
+<hr>
+<h3 id="navigating-the-macos-installer">Navigating the macOS Installer</h3>
+<p>You need to format your drive in order to install macOS. Your drive needs to be both <code>GUID</code> partition scheme and formatted as <code>APFS</code> in order for macOS to be able to be installed.</p>
+<p><em>Note: You will need a USB mouse for this install and to configure the Trackpad.</em></p>
+<ul>
+<li>Click <code>Utilities &gt; Disk Utility</code> on the top menu bar.</li>
+<li>Find your drive that you put in your computer.
+<ul>
+<li>For me, this showed up as Sabrent Rocket Q</li>
+</ul>
+</li>
+<li>Press <code>Erase</code> and format the drive as <code>GUID</code> and <code>APFS</code>.
+<ul>
+<li>Make sure you do not erase the Windows drive or you won’t be able to use Windows!</li>
+</ul>
+</li>
+<li>Close Disk Utility and proceed with the installer.
+<ul>
+<li>At this point, you will need to connect your Ethernet cable if you made your installer with Windows.</li>
+</ul>
+</li>
+</ul>
+<p><em>Note: Your system will reboot a few times. Make sure you get back into the OpenCore menu each time, and select <code>macOS installer</code> the first time and then select whatever you named your disk as the second time.</em></p>
+<p><img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/firstboot.jpg" alt="First Boot">
+By now, you should be booted into macOS and going through the initial 
+setup process. Congrats! There are more steps that you need to take to 
+get everything up and running, but for now macOS should work.</p>
+<hr>
+<h2 id="fixing-necessary-things">Fixing Necessary Things</h2>
+<p>While macOS is installed and is likely functional, there are some 
+quality of life things we need to take care of in order to get this 
+laptop working to its full capacity.</p>
+<p><strong>Things that need to be fixed</strong></p>
+<ul>
+<li>Audio</li>
+<li>CPU Power Management</li>
+<li>Trackpad</li>
+<li>WIFI/Bluetooth</li>
+</ul>
+<hr>
+<h3 id="audio">Audio</h3>
+<p>If you followed this guide to a tee, your audio should already be 
+working as you have set the correct boot-args. In order to get audio 
+working, you need to put <code>alcid=XX</code> in your boot-args where 
+XX is your audio layout ID. For this laptop, I found that 13 is the ID 
+that works the best for this laptop.</p>
+<ul>
+<li>Under <code>NVRAM &gt; Add &gt; 7C436110-AB2A-4BBB-A880-FE41995C9F82 &gt; boot-args</code> add <code>alcid=13</code>.
+<ul>
+<li>This should enable audio through the speakers and microphone input for this laptop.</li>
+</ul>
+</li>
+</ul>
+<p><em>Note: I have not found out how to make the 3.5mm audio jack 
+plug-in to work with this laptop. For now, just the speakers and the 
+microphone work.</em></p>
+<hr>
+<h3 id="cpu-power-management">CPU Power Management</h3>
+<p>Because we put <code>SMCProcessor.kext</code> in our Kexts folder, we
+ should have working power management with our system. The problem is 
+that this power management is designed for a Macbook Pro 16” which is <strong>NOT</strong> what our system is.</p>
+<p>In order to tell our system to use a better power management structure, we use <code>CPUFriend.kext</code> and the <a href="https://github.com/corpnewt/CPUFriendFriend">CPUFiendFiend</a> script to create the power plan.</p>
+<ul>
+<li>The <code>CPUFriend.kext</code> is meant to enable our power management plan and <code>CPUFriendFriend</code> creates that plan for us!</li>
+</ul>
+<p><strong>Download CPUFriendFriend</strong></p>
+<pre><code>git clone https://github.com/corpnewt/CPUFriendFriend.git
+cd CPUFriendFriend
+chmod +x CPUFriendFriend.command
+</code></pre><p><strong>Using CPUFriendFriend</strong></p>
+<ul>
+<li>Run CPUFriendFriend with <code>./CPUFriendFriend.command</code> or by double-clicking CPUFriendFriend.command in Finder.</li>
+<li>Your screen should look like this:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/cpufriendfriendinitial.jpg" alt="CPUFriendFriend Initial Screen">
+This may look a little confusing at first, but it really is not too 
+complicated. We are going to be using this script to tell the CPU which 
+frequencies it will run at at different stages. I have tried many 
+different configurations for this, but I have found that using 1300Mhz 
+and the most power saving plan works the best at each of the three power
+ stages. The CPU will still increase its frequency beyond this to 
+perform tasks that it needs to. This is just most effective at 
+preserving battery life. Feel free to modify this on your own.</li>
+</ul>
+<p>If you want to follow my power plan, follow the steps below. You can create your own if you would like.</p>
+<ul>
+<li>Enter <code>0D</code> and press enter.
+<ul>
+<li>This will tell CPUFriendFriend to use 1300Mhz for the first stage.
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/cpufriend1300.jpg" alt="1300Mhz"></li>
+</ul>
+</li>
+<li>Enter <code>C0</code> and press enter.
+<ul>
+<li>This will tell CPUFriendFriend that you would like to use the most power saving plan.</li>
+</ul>
+</li>
+<li>Do this for all three power stages that it tells you to complete.
+<ul>
+<li>Yes it should say 1300Mhz for each power stage.</li>
+</ul>
+</li>
+</ul>
+<p>After doing this, a <code>CPUFriendDataProvider.kext</code> should be in the results folder of CPUFriendFriend.</p>
+<ul>
+<li>Move this kext to your <code>EFI/OC/Kexts</code> folder on your USB’s EFI partition.
+<ul>
+<li>You may need to mount EFI again with MountEFI.</li>
+</ul>
+</li>
+</ul>
+<p>Finally, you’re going to need to download <code>CPUFriend.kext</code>.</p>
+<ul>
+<li><a href="https://github.com/acidanthera/CPUFriend/releases/tag/1.2.1">CPUFriend.kext</a>
+<ul>
+<li>Put this in your <code>EFI/OC/Kexts</code> folder on your USB’s EFI partition.</li>
+</ul>
+</li>
+<li>Open up ProperTree with <code>ProperTree.command</code>.</li>
+<li>Open your <code>config.plist</code> from your USB’s EFI partition.</li>
+<li>Click <code>File &gt; OC Snapshot</code> from the menu bar.
+<ul>
+<li>This will add <code>CPUFriend.kext</code> and <code>CPUFriendDataProvider.kext</code> to your <code>config.plist</code>.</li>
+<li><em>Note: If you do <code>OC Clean Snapshot</code> it will erase all of your config settings so make sure you do <code>OC Snapshot</code>.</em></li>
+</ul>
+</li>
+<li>Click <code>File &gt; Save</code> to save the file.</li>
+</ul>
+<p>With this, your CPU should be managing its power effectively. This 
+will likely improve your thermals and your battery life. If you would 
+like to view your CPU frequencies and thermals, I recommend downloading <a href="https://github.com/CloverHackyColor/HWMonitorSMC2/releases">HWMonitorSMC2</a>.</p>
+<hr>
+<h3 id="trackpad">Trackpad</h3>
+<p>Oh boy here we go this is the hard one. I spent weeks trying to 
+figure out how to get the trackpad working with this laptop and I have 
+finally got it working. Because I spent so much time myself trying to 
+get this to work, I will burden you with the unnecessary details about 
+why ASUS is terrible at making DSDT files.</p>
+<p>VoodooI2C, the kext that is used to make our trackpad work requires 
+SSCN and FMCN values to be sent from out DSDT to our operating system. 
+ASUS, for some stupid ass reason, decided not to include the SSCN values
+ under the I2C controller that the trackpad is attached to. These 
+required values are present elsewhere in the DSDT, however, so it is 
+possible to patch our DSDT to make this work.</p>
+<p><strong>Tools</strong></p>
+<p>In order to create our own SSDT to patch this, we are going to need 
+MaciASL, a tool for editing and creating ACPI files. If you made your 
+own SSDT files, you likely already have this installed. If not, download
+ it here:</p>
+<ul>
+<li><a href="https://github.com/acidanthera/MaciASL/releases">MaciASL</a></li>
+</ul>
+<p>Opening up MaciASL should bring up your system DSDT. You are going to want to find some values from this.</p>
+<ul>
+<li>Press <code>CRTL/F</code> and type in <code>SSCN</code>.</li>
+<li>Find <code>Method (SSCN, 0, NotSerialized)</code> under <code>Scope (_SB.PCI0.I2C1)</code>. It should look like below:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/dsdt.jpg" alt="DSDT"></li>
+<li>Screenshot this or keep this handy as you are going to need to do another search.</li>
+<li>Press <code>CRTL/F</code> and type in <code>PKG3</code>. You should find this:
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/pkg3.jpg" alt="PKG3"></li>
+<li>Next, click <code>File &gt; New</code> in the menu bar to create a new SSDT.</li>
+<li>Next, paste the following:</li>
+</ul>
+<pre><code>DefinitionBlock ("", "SSDT", 2, "hack", "I2C", 0x00000000)
+{
+    External (_SB_.PCI0.I2C1, DeviceObj)
+    External (SSD1, IntObj)
+    External (SSH1, IntObj)
+    External (SSL1, IntObj)
+
+    Scope (_SB.PCI0.I2C1)
+    {
+        Method (PKG3, 3, Serialized)
+        {
+            Name (PKG, Package (0x03)
+            {
+                Zero,
+                Zero,
+                Zero
+            })
+            PKG [Zero] = Arg0
+            PKG [One] = Arg1
+            PKG [0x02] = Arg2
+            Return (PKG) /* \_SB_.PCI0.I2C1.PKG3.PKG_ */
+        }
+
+        Method (SSCN, 0, NotSerialized)
+        {
+            Return (PKG3 (SSH1, SSL1, SSD1))
+        }
+    }
+}
+</code></pre><p>As you can see, my <code>SSDT-I2C.dsl</code> file has both the <code>PKG3</code> method and the <code>SSCN</code> method from my <code>DSDT</code>. This is essentially adding these methods to my I2C controller. The <code>DefinitionBlock</code> is meant to tell OpenCore to load this SSDT file and it defines the changes as unique. The <code>External</code> blocks are meant to define the variables used in the <code>PKG3</code> and <code>SSCN</code> methods. You may need to modify this based on what you saw in your searches in your <code>DSDT</code>.</p>
+<ul>
+<li>Click <code>File &gt; Save-As</code> and save the file as <code>SSDT-I2C.aml</code>. Make sure you change the filetype to <code>ACPI Machine Language Binary</code>.</li>
+<li>Move this file to your <code>EFI/OC/ACPI</code> folder on the EFI partition on your USB.</li>
+<li>Run <code>ProperTree.command</code>, open your <code>config.plist</code>, and do <code>File &gt; OC Snapshot</code> to add the SSDT to your <code>config.plist</code> file.</li>
+<li>Reboot and hopefully your trackpad should be working.</li>
+</ul>
+<p>My SSDT will be available on my Github repo <a href="https://github.com/TMSTweaks/ASUS-Zephyrus-M15-Hackintosh/blob/master/SSDT/SSDT-I2C.aml">here</a>.</p>
+<hr>
+<h3 id="wifibluetooth">WIFI/Bluetooth</h3>
+<p>Initially, I purchased a USB wifi adapter to get WIFI working. It 
+worked well, but it was annoying having one USB port always being filled
+ up. Then came <a href="https://github.com/OpenIntelWireless">OpenIntelWireless</a>.</p>
+<p>The creators behind OpenIntelWireless have made kexts that work with 
+the wifi card in this laptop! This means that we no longer need our USB 
+WIFI Adapter. There will be an additional post with instructions for the
+ USB WIFI adapter that I purchased.</p>
+<p><em>Note: Please be aware that at the time of this writing, this kext is <strong>extremely</strong>
+ buggy and is experimental. The one issue I have had so far is decreased
+ range from my WIFI Card and occasional screen flickering. This is 
+something I can live with, but I know not all users will want this.</em></p>
+<p>To start, download <code>AirportItlwm</code> <strong>NOT</strong> <code>itlwm</code>. If you are on a different macOS other than Big Sur or Catalina, download <code>itlwm</code> instead.</p>
+<ul>
+<li><a href="https://github.com/OpenIntelWireless/itlwm/releases">AirportItlwm</a></li>
+</ul>
+<p>You are also going to need <code>IntelBluetoothFirmware</code>.</p>
+<ul>
+<li><a href="https://github.com/OpenIntelWireless/IntelBluetoothFirmware/releases/tag/1.1.2">IntelBluetoothFirmware</a></li>
+</ul>
+<p><strong>Make sure you are on OpenCore 0.6.1 Release Version for compatibility with this kext.</strong></p>
+<p>Now on with the install:</p>
+<ul>
+<li>Move <code>Airportitlwm.kext</code> and <code>IntelBluetoothFirmware.kext</code> to your <code>EFI/OC/Kexts</code> folder.
+<ul>
+<li>You can ignore the other kext in the <code>IntelBluetoothFirmware</code> folder as it will not be needed.</li>
+</ul>
+</li>
+<li>Run <code>ProperTree.command</code>, open your <code>config.plist</code>, and do <code>File &gt; OC Snapshot</code> to add the kexts to your <code>config.plist</code>.</li>
+<li>Reboot and get back into macOS with your USB.</li>
+<li>Connect to your WIFI network in your menu bar.</li>
+<li><em><strong>If your wifi does not work on the first try, you may need to add the network from system preferences as shown below.</strong></em>
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/wifisystem.jpg" alt="WIFI SysPref"></li>
+</ul>
+<hr>
+<p><img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/wifi.jpg" alt="WIFI"></p>
+<hr>
+<p><img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/bluetooth.jpg" alt="Bluetooth">
+<em><strong>If your wifi does not work on the first boot, you may need to reboot to get it working.</strong></em></p>
+<p>You should now have working WIFI and bluetooth on your ASUS laptop.</p>
+<hr>
+<h2 id="finalizing-things">Finalizing Things</h2>
+<p>By this point, you are almost done! Your Asus Zephyrus M15 should 
+pretty much be fully functional on macOS. It does suck that you have to 
+use the USB every time you want to boot though…</p>
+<p>Lets fix that.</p>
+<h3 id="moving-efi-to-you-macos-disk">Moving EFI to you macOS Disk</h3>
+<ul>
+<li>Mount your USB EFI using <code>MountEFI.command</code>.</li>
+<li>Copy your <code>EFI</code> folder to your desktop or somewhere safe.</li>
+<li>Right click on EFI in finder and click <code>Eject "EFI"</code>.
+<img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/ejectefi.jpg" alt="Eject EFI"></li>
+<li>Mount the EFI partition of your macOS disk by using <code>MountEFI.command</code> and selecting the disk you installed macOS on.</li>
+<li>Copy the <code>EFI</code> folder that you saved on your desktop or somewhere safe to the EFI partition that you just mounted.</li>
+<li>Eject and unplug your USB.</li>
+</ul>
+<p>Now, every time you reboot, you don’t need to have your USB drive to boot macOS. Just select <code>OpenCore</code> or your disk in the boot menu in your BIOS.</p>
+<hr>
+<h3 id="final-notes">Final Notes</h3>
+<p>Here are some notes for using your computer with macOS on it.</p>
+<ul>
+<li>Do <strong>NOT</strong> boot Windows from the OpenCore menu!
+<ul>
+<li>This will likely break some parts of Windows, as you are injecting your macOS patched <code>DSDT</code> into Windows which is not compatible.</li>
+</ul>
+</li>
+<li>When you want to boot into Windows, you need to go in to BIOS and change the <code>SATA</code> setting back to <code>Intel</code> rather than <code>ACPI</code>. You also need to reenable <code>Secure Boot</code> if you haven’t disabled Bitlocker.</li>
+<li>If you boot Windows and you get a screen about settings being 
+changed, go to the recovery link that is available on that page and 
+login with your Microsoft account. Type in the recovery key on that 
+website into that blue screen in order to boot your Windows install. I 
+would disable Bitlocker after this.</li>
+<li>The time in your Windows install may be different after just using macOS.
+<ul>
+<li>To fix this, follow this <a href="https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/">guide</a> and use the section titled: <code>Make Windows Use UTC Time By Editing the Registry</code>.</li>
+</ul>
+</li>
+</ul>
+<p>I hope you found this guide useful! This entire process was a huge 
+journey for me and it enhanced my knowledge of Hackintosh and computers 
+in general. I was finally able to make my laptop the ultimate laptop to 
+fit my needs. I could use Windows for games and macOS for all things 
+productivity.</p>
+<p>Here is a link to the files in this project on <a href="https://github.com/TMSTweaks/ASUS-Zephyrus-M15-Hackintosh">Github</a>.</p>
+<h4 id="disclaimer">Disclaimer</h4>
+<p>I am <strong>not</strong> responsible for anything that goes wrong 
+with your device as a result of the posts on this site. By trying these 
+methods on your device, you are taking full responsibility for your 
+actions.</p>
+<p>View my Github <a href="https://github.com/TMSTweaks">here</a></p>
+
+      </article>
+      
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" href="https://www.tmstweaks.com/post/2020/about/" class="card blog-card" rel="bookmark">
+  
+  <div class="card-img-container">
+    <p class="card-img-overlay">Next Article</p>
+    <picture>
+      
+      <source srcset="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/about.jpg 1x">
+      <img src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/about.jpg" class="card-img" alt="Description for the featured image, used as the alt text">
+    </picture>
+  </div>
+  
+  <article class="card-body">
+    <h2 class="card-title">About</h2>
+    <p class="card-text">Who am I and what do I do?</p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2020-08-18 818:00">Aug 18, 2020</time></p>
+      <p></p>
+    </div>
+  </article>
+</a>
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" href="https://www.tmstweaks.com/" class="card home-card" style="background-image: url( https://www.tmstweaks.com/img/grey-cloud.jpg )" rel="bookmark">
+  Home
+</a>
+    </nav>
+    <script defer="defer" src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/katex.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script defer="defer" src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/auto-render.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+  
+  <script src="Asus%20Zephyrus%20M15%20(2020)%20Hackintosh%20%C2%B7%20TMSTweaks_files/core.js"></script>
+
+  
+
+</body></html>
