@@ -1,8 +1,9 @@
 #root {
-  --tabs-font: 10pt Segoe UI;
-  --tabs-count-font: .625rem Segoe UI;
-  --bookmarks-bookmark-font: .875rem Segoe UI;
-  --bookmarks-folder-font: 10pt Segoe UI;
+  --tabs-height: 35px;
+  --tabs-font: 10pt;
+  --tabs-count-font: .625rem;
+  --bookmarks-bookmark-font: .875rem;
+  --bookmarks-folder-font: 10pt;
 }
 
 /* Adjust styles according to sidebar width */
@@ -30,13 +31,7 @@
   }
 }
 
-/*
- * Add margins and rounding around tabs
- */ 
-
-#root {
-  --tabs-height: 43px;
-}
+/* Add margins and rounding around tabs */ 
 
 /* Background layer */
 
@@ -97,14 +92,14 @@
 
 
 .Tab[data-selected] .lvl-wrapper:after {
-  background-color: var(--tabs-selected-bg);,
+  background-color: var(--tabs-selected-bg);
 }
 
 /* Resize and reposition favicons */
 .Tab .fav {
   width: 18px;
   height: 18px;
-  margin-left: 10px;
+  margin-left: 2px;
 }
 
 .Tab .placeholder > svg {
