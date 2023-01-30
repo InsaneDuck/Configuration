@@ -28,7 +28,7 @@ Instructions:
   --uc-sidebar-width: 38px !important;
   --uc-sidebar-hover-width: 350px !important;
   /* Wait delay before hiding sidebar */
-  --uc-autohide-sidebar-delay: 100ms;
+  --uc-autohide-sidebar-delay: 50ms;
 }
 
 /* modified side-bar */
@@ -59,20 +59,4 @@ Instructions:
 /*  border-inline: 1px solid var(--sidebar-border-color) !important;*/
   border-inline: 1px solid var(--chrome-content-separator-color) !important;
   border-inline-width: 0px 1px;
-}
-
-#sidebar-box[positionend]{
-  direction: rtl
-}
-
-#sidebar-box[positionend] > *{
-  direction: ltr
-}
-
-#sidebar-box[positionend]:-moz-locale-dir(rtl){
-  direction: ltr
-}
-
-#sidebar-box[positionend]:-moz-locale-dir(rtl) > *{
-  direction: rtl
 }
