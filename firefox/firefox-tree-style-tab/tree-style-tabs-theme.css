@@ -20,10 +20,10 @@
 #tabbar .tab {
   transition: 0.1s margin-top, 0.2s 0.1s visibility;
 }
+
 #tabbar tab-item-substance {
   transition: 0.2s 0.1s margin-left;
 }
-
 
 /* delay transitions on open */
 #tabbar:not(:hover) tab-item-substance {
@@ -40,6 +40,7 @@
 .tab {
   background-color: transparent;
 }
+
 .tab,
 .tab.pinned {
   height: 2.8em;
@@ -66,7 +67,6 @@
   margin-left: -12px;
   transition-delay: var(--tst-sidepanel-hide-delay);
 }
-
 
 /* hide closebox unless needed */
 .tab:not(:hover) .closebox {
@@ -111,14 +111,17 @@ tab-item.active .highlighter::before {
 .tab.active:hover {
   background-color: inherit;
 }
+
 .tab.active .label {
   font-weight: bold;
   color: #f4f4f4 !important;
 }
+
 .tab .label,
 .tab.active .label {
   border-bottom:  1px solid transparent;
 }
+
 .tab:hover .label,
 .tab.active:hover .label {
   border-bottom:  1px dotted;
@@ -131,9 +134,11 @@ tab-item.active .highlighter::before {
 .tab.discarded {
   background-color: #1d1d1d;
 }
+
 .tab.discarded .label {
   color: #efefefCC !important;
 }
+
 .tab.discarded:hover .label {
   color: #efefef !important;
 }
@@ -163,19 +168,23 @@ tab-item.active .highlighter::before {
   top: 0 !important;
   left: 0 !important;
 }
+
 .tab.pinned:not(.active) {
   display: none;
 }
+
 .tab.pinned .label,
 .tab.pinned .label-content {
   opacity: 1;
   position: unset;
   padding-bottom: 0;
 }
+
 .tab.pinned .sound-button {
   position: relative;
   transform: none;
 }
+
 .tab.pinned .twisty {
   display: block;
   min-width: none;
