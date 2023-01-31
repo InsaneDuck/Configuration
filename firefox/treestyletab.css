@@ -1,0 +1,33 @@
+:root {
+  --tst-sidepanel-hide-delay: 50ms;
+}
+
+#tabbar:not(:hover) tab-item-substance {
+  transition-delay: var(--tst-sidepanel-hide-delay);
+  margin-left: 0;
+}
+
+#tabbar:not(:hover) .tab .twisty {
+  visibility: hidden;
+  margin-left: -10px;
+  transition-delay: var(--tst-sidepanel-hide-delay);
+}
+
+.tab .label {
+  margin-left: 5px;
+}
+
+/* hide close-box unless needed */
+.tab:not(:hover) .closebox {
+  visibility: hidden;
+}
+
+/* Hide 'new tab' button. */
+.newtab-button-box {
+  display: none;
+}
+
+#sidebar-box:hover > tab-item tab-label {
+  overflow: unset;
+  white-space: unset;
+}
