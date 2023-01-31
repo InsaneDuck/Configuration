@@ -9,6 +9,13 @@ Instructions:
     - restart the browser
 */
 
+:root {
+  --uc-sidebar-width: 38px !important;
+  --uc-sidebar-hover-width: 350px !important;
+  /* Wait delay before hiding sidebar */
+  --uc-autohide-sidebar-delay: 50ms;
+}
+
 /* Hide Tabs on Topbar */
 #TabsToolbar {
   visibility: collapse;
@@ -22,13 +29,6 @@ Instructions:
 /* Hide splitter */
 #sidebar-box + #sidebar-splitter {
   display: none !important;
-}
-
-:root {
-  --uc-sidebar-width: 38px !important;
-  --uc-sidebar-hover-width: 350px !important;
-  /* Wait delay before hiding sidebar */
-  --uc-autohide-sidebar-delay: 50ms;
 }
 
 /* modified side-bar */
