@@ -47,4 +47,3 @@ Allow keyboard selection of windows and workspaces in overlay mode. <Ctrl>number
 Workspace Indicator by fmuellner
 
 Put an indicator on the panel signaling in which workspace you are, and give you the possibility of switching to another one.
-

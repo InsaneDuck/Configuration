@@ -99,10 +99,6 @@ echo "setting up git"
 git config --global user.name "satya"
 git config --global user.email "39309626+InsaneDuck@users.noreply.github.com"
 
-#echo "setting up synth shell"
-#git clone --recursive https://github.com/andresgongora/synth-shell.git
-#chmod +x synth-shell/setup.sh
-#cd synth-shell
-#./setup.sh
-#cd ..
-#rm -rf synth-shell
+#echo "restoring dconf"
+#dconf reset -f /
+#dconf load / < dconf-dump
