@@ -1,0 +1,2 @@
+pacman -S kitty nvidia-dkms
+yay -S hyprland-git
