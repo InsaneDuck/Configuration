@@ -24,7 +24,6 @@ ffmpegthumbnailer
 firefox
 fish
 flatpak
-gedit
 gimp
 git
 gnome-terminal
@@ -42,6 +41,7 @@ intel-media-sdk
 intel-ucode
 java17-openjfx
 jdk17-openjdk
+kitty
 lib32-libva-mesa-driver
 lib32-mesa-vdpau
 lib32-nvidia-utils
