@@ -2,13 +2,13 @@ alsa-utils
 android-tools
 archlinux-appstream-data
 aspnet-runtime
-asusctl
+
 base-devel
 bash-completion
 bleachbit
 cronie
 cups
-dbeaver
+
 dconf-editor
 discord
 dmidecode
@@ -24,9 +24,9 @@ ffmpegthumbnailer
 firefox
 fish
 flatpak
-gimp
+
 git
-gnome-terminal
+
 gnome-themes-extra
 go
 gpart
@@ -78,7 +78,7 @@ rustup
 smartmontools
 smbclient
 steam
-supergfxctl
+
 ttf-font-awesome
 ttf-jetbrains-mono
 udftools

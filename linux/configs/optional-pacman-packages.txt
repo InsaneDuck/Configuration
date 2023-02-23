@@ -17,3 +17,7 @@ mono
 msbuild
 sndio
 torbrowser-launcher
+gedit
+dbeaver
+gimp
+gnome-terminal

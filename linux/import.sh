@@ -2,20 +2,7 @@
 #to exit script if any command fails
 set -e
 
-# Check if repository is already present
-if grep -q "g14" /etc/pacman.conf; then
-  echo "g14 Repository already present"
-else
-  # Add repository to pacman configuration file
-  echo "" | sudo tee -a /etc/pacman.conf
-  echo "#asus-linux repository" | sudo tee -a /etc/pacman.conf
-  echo "[g14]" | sudo tee -a /etc/pacman.conf
-  echo "SigLevel = DatabaseNever Optional TrustAll" | sudo tee -a /etc/pacman.conf
-  echo "Server = https://arch.asus-linux.org" | sudo tee -a /etc/pacman.conf
-  echo "g14 Repository added"
-  # Update package database
-  sudo pacman -Sy
-fi
+
 
 echo "installing pacman packages"
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
@@ -98,6 +85,9 @@ echo "installing flatpak packages"
 echo "setting up git"
 git config --global user.name "satya"
 git config --global user.email "39309626+InsaneDuck@users.noreply.github.com"
+
+echo "Adding asus stuff"
+sh scripts/asus.sh
 
 #echo "restoring dconf"
 #dconf reset -f /
