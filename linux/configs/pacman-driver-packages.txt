@@ -18,6 +18,7 @@ linux-firmware-qlogic
 linux-headers
 ntfs-3g
 nvidia-utils
+nvidia-settings
 pigz
 power-profiles-daemon
 smartmontools
