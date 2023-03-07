@@ -5,7 +5,9 @@ set -e
 
 
 echo "installing pacman packages"
+sudo xargs pacman -S --needed --noconfirm < configs/pacman-driver-packages.txt
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
+
 
 echo "removing packages"
 sudo pacman -R --noconfirm gnome-software-packagekit-plugin
