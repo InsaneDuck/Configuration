@@ -1,0 +1,15 @@
+[Default Applications]
+application/x-shellscript=org.gnome.TextEditor.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+video/mp4=vlc.desktop
+text/x-java=org.gnome.TextEditor.desktop
+text/plain=org.gnome.TextEditor.desktop
+text/html=org.gnome.TextEditor.desktop
+inode/directory=org.gnome.Nautilus.desktop
+
+[Added Associations]
+application/x-shellscript=org.gnome.TextEditor.desktop;
+video/mp4=vlc.desktop;
+text/x-java=org.gnome.TextEditor.desktop;
+text/plain=org.gnome.TextEditor.desktop;
+text/html=org.gnome.TextEditor.desktop;

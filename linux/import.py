@@ -134,14 +134,7 @@ def yay_install():
     for package in aur_packages:
         subprocess.run(["yay", "-S", package, "--needed", "--noconfirm"])
 
-
-def enable_services():
-    for service in system_services:
-        subprocess.run(["sudo", "systemctl", "enable", service])
-
-
-def main():
-    pacman_install()
+def install_yay():
     # Check if yay is already installed
     if shutil.which("yay") is None:
         # Install git
@@ -156,8 +149,18 @@ def main():
         subprocess.run(["cd", ".."])
         subprocess.run(["rm", "-rf", "yay"])
     else:
-        print("yay is already installed. installing yay packages")
-        yay_install()
+        print("yay is already installed")
+
+
+def enable_services():
+    for service in system_services:
+        subprocess.run(["sudo", "systemctl", "enable", service])
+
+
+def main():
+    pacman_install()
+    install_yay()
+    yay_install()
     enable_services()
 
 
