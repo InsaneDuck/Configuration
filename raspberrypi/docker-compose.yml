@@ -7,7 +7,7 @@ services:
       - '9000:9000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/satya/applications/portainer-config:/data
+      - ~/applications/portainer-config:/data
     restart: always
   
   mariadb:
@@ -15,10 +15,12 @@ services:
     container_name: mariadb
     ports:
       - '33060:3306'
+    env_file: .env
     environment:
       MARIADB_ROOT_PASSWORD: password
     volumes:
-      - /home/satya/applications/mariadb-data:/var/lib/mysql
+      - ~/applications/mariadb-data:/var/lib/mysql
+    restart: always
 
   pihole:
     image: pihole/pihole:latest
@@ -28,14 +30,15 @@ services:
       - "5300:53/udp"
       - "6700:67/udp"
       - "8000:80/tcp"
+    env_file: .env
     environment:
-      TZ: 'United Kingdom/London'
-      WEBPASSWORD: 4CaNgAYhsTU!*hbL    
+      TZ: 'United Kingdom/London'    
     volumes:
-      - '/home/satya/applications/pihole-data/etc-pihole:/etc/pihole'
-      - '/home/satya/applications/pihole-data/etc-dnsmasq.d:/etc/dnsmasq.d'
+      - '~/applications/pihole-data/etc-pihole:/etc/pihole'
+      - '~/applications/pihole-data/etc-dnsmasq.d:/etc/dnsmasq.d'
     restart: always
 
+  # TODO add hardware acceleration for these
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
@@ -43,7 +46,8 @@ services:
       - '8097:8096'
       - '8921:8920'
     volumes:
-        - /home/satya/applications/jellyfin-data:/config
+        - ~/applications/jellyfin-data:/config
+        - jellyfin-cache:/cache
     restart: always
   
   emby:
@@ -56,5 +60,8 @@ services:
       - UID=1000
       - GID=1000
     volumes:
-      - /home/satya/applications/emby-data:/config
+      - ~/applications/emby-data:/config
     restart: always
+
+volumes:
+  jellyfin-cache:
