@@ -1,1 +1,3 @@
 starship
+kompare
+ice-ssb
