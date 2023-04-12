@@ -1,0 +1,2 @@
+full-screen-api.ignore-widgets true
+layout.css.devPixelsPerPx 0.9
