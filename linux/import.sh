@@ -7,19 +7,19 @@ sudo xargs pacman -S --needed --noconfirm < configs/pacman-driver-packages.txt
 sudo xargs pacman -S --needed --noconfirm < configs/pacman-packages.txt
 
 
-echo "removing packages"
-sudo pacman -R --noconfirm gnome-software-packagekit-plugin
-sudo pacman -R --noconfirm gnome-software
-sudo pacman -R --noconfirm malcontent
+#echo "removing packages"
+#sudo pacman -R --noconfirm gnome-software-packagekit-plugin
+#sudo pacman -R --noconfirm gnome-software
+#sudo pacman -R --noconfirm malcontent
 #sudo pacman -R --noconfirm gnome-console
-sudo pacman -Runs --noconfirm gnome-photos
-sudo pacman -Runs --noconfirm totem
-sudo pacman -Runs --noconfirm gnome-weather
-sudo pacman -Runs --noconfirm epiphany
-sudo pacman -Runs --noconfirm gnome-contacts
-sudo pacman -Runs --noconfirm eog
-sudo pacman -Runs --noconfirm gnome-maps
-sudo pacman -Runs --noconfirm gnome-music
+#sudo pacman -Runs --noconfirm gnome-photos
+#sudo pacman -Runs --noconfirm totem
+#sudo pacman -Runs --noconfirm gnome-weather
+#sudo pacman -Runs --noconfirm epiphany
+#sudo pacman -Runs --noconfirm gnome-contacts
+#sudo pacman -Runs --noconfirm eog
+#sudo pacman -Runs --noconfirm gnome-maps
+#sudo pacman -Runs --noconfirm gnome-music
 #reinstalling this to fix cache?
 sudo pacman -S --noconfirm archlinux-appstream-data
 
@@ -30,11 +30,13 @@ echo "setting up bootloader"
 sudo bootctl remove
 sudo refind-install
 sudo mkdir -p /boot/EFI/refind/drivers_x64
-sudo mkdir -p /boot/EFI/refind/themes
 sudo cp /usr/share/refind/drivers_x64/btrfs_x64.efi /boot/EFI/refind/drivers_x64/btrfs_x64.efi
-sudo cp -r configs/refind-theme-regular /boot/EFI/refind/themes
-echo "# Load rEFInd theme Regular" | sudo tee -a /boot/EFI/refind/refind.conf
-echo "include themes/refind-theme-regular/theme.conf" | sudo tee -a /boot/EFI/refind/refind.conf
+
+#echo "installing bootloader theme"
+#sudo mkdir -p /boot/EFI/refind/themes
+#sudo cp -r configs/refind-theme-regular /boot/EFI/refind/themes
+#echo "# Load rEFInd theme Regular" | sudo tee -a /boot/EFI/refind/refind.conf
+#echo "include themes/refind-theme-regular/theme.conf" | sudo tee -a /boot/EFI/refind/refind.conf
 
 echo "setting up user-groups"
 sudo usermod -aG docker "${USER}"

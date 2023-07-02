@@ -26,7 +26,6 @@ go
 gpart
 gparted
 gradle
-
 gthumb
 java17-openjfx
 jdk17-openjdk
@@ -37,7 +36,6 @@ mariadb
 maven
 mkvtoolnix-cli
 mpv
-mysql-workbench
 nautilus-share
 neofetch
 noto-fonts
@@ -49,7 +47,6 @@ pigz
 powerline-fonts
 qbittorrent
 qemu
-qt5-wayland
 refind
 rustup
 smbclient

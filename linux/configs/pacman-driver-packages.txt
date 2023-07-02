@@ -23,7 +23,6 @@ pigz
 power-profiles-daemon
 smartmontools
 udftools
-v4l2loopback-dkms
 vkd3d
 vulkan-intel
 vulkan-mesa-layers

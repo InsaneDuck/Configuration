@@ -1,5 +1,22 @@
 version: "3.3"
 services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+       - PUID=1000
+       - PGID=1000
+       - TZ=Etc/UTC
+       - WEBUI_PORT=8090
+    volumes:
+       - /home/satya/applications/qbittorrent-config:/config
+       - /mnt/4tb/Downloads:/downloads
+    ports:
+       - "8090:8090"
+       - "6881:6881"
+       - "6881:6881/udp"
+    restart: always
+
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -7,7 +24,7 @@ services:
       - '9000:9000'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/applications/portainer-config:/data
+      - /home/satya/applications/portainer-config:/data
     restart: always
   
   mariadb:
@@ -15,13 +32,69 @@ services:
     container_name: mariadb
     ports:
       - '33060:3306'
-    env_file: .env
     environment:
       MARIADB_ROOT_PASSWORD: password
     volumes:
-      - ~/applications/mariadb-data:/var/lib/mysql
+      - /home/satya/applications/mariadb-data:/var/lib/mysql
+    restart: always
+  
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - '54320:5432'
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - /home/satya/applications/postgres-data:/var/lib/postgresql/data
     restart: always
 
+  mongo:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb-data:/data/db
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - '8081:8081'
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo:27017/
+
+  jenkins:
+    image: jenkins/jenkins:latest-jdk17
+    container_name: jenkins
+    ports:
+      - '6750:8080'
+      - '50000:50000'
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /home/satya/.ssh/id_rsa:/var/jenkins_home/.ssh/id_rsa
+    restart: always
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    ports:
+      - '8097:8096'
+      - '8921:8920'
+    volumes:
+        - /mnt/4tb:/mnt/media
+        - /home/satya/applications/jellyfin-data:/config
+        - jellyfin-cache:/cache
+    restart: always
+    
   pihole:
     image: pihole/pihole:latest
     container_name: pihole
@@ -37,31 +110,8 @@ services:
       - '~/applications/pihole-data/etc-pihole:/etc/pihole'
       - '~/applications/pihole-data/etc-dnsmasq.d:/etc/dnsmasq.d'
     restart: always
-
-  # TODO add hardware acceleration for these
-  jellyfin:
-    image: jellyfin/jellyfin:latest
-    container_name: jellyfin
-    ports:
-      - '8097:8096'
-      - '8921:8920'
-    volumes:
-        - ~/applications/jellyfin-data:/config
-        - jellyfin-cache:/cache
-    restart: always
   
-  emby:
-    image: emby/embyserver_arm64v8
-    container_name: emby
-    ports:
-      - '8096:8096'
-      - '8920:8920'
-    environment:
-      - UID=1000
-      - GID=1000
-    volumes:
-      - ~/applications/emby-data:/config
-    restart: always
-
 volumes:
   jellyfin-cache:
+  jenkins-data:
+  mongodb-data:

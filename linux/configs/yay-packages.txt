@@ -3,7 +3,6 @@ chiaki
 cowfortune
 downgrade
 google-chrome
-iriunwebcam-bin
 jetbrains-toolbox
 pamac-aur
 rpi-imager
