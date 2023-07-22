@@ -1,0 +1,27 @@
+ssh satya@insaneduck-pi.local
+git clone git@github.com:InsaneDuck/configuration.git
+sudo pacman -Syu kdeconnect
+sudo cp -p /usr/share/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf /etc/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf
+sudo cp ~/.config/monitors.xml ~gdm/.config/monitors.xml
+avahi-set-host-name $(hostname)
+sudo pacman -Syu hostname avahi nss-mdns
+sudo nano /etc/nsswitch.conf
+systemctl restart avahi-daemon.service 
+sudo pacman -Syu lib32-mesa lib32-vulkan-intel lib32-vulkan-mesa-layers sysfsutils libva-utils
+sudo dmesg
+sudo pacman -Syu starship noto-fonts-emoji ttf-sourcecodepro-nerd neovim mkvtoolnix-cli gnome-boxes virglrenderer
+sudo pacman -Syu filelight
+npx sort-package-json
+swapon --show
+sudo swapon --show
+sudo pacman -Syu
+flatpak list
+sudo bash -c "echo 0 > /sys/module/zswap/parameters/enabled"
+sudo swapoff --all
+grep swap /etc/fstab
+sudo modprobe zram num_devices=1
+cat /sys/block/zram0/comp_algorithm
+sudo bash -c "echo 8G > /sys/block/zram0/disksize"
+sudo mkswap --label zram0 /dev/zram0
+sudo swapon --priority 32767 /dev/zram0
+zramctl
