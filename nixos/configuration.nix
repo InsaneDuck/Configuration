@@ -101,6 +101,10 @@
     };
   };
 
+
+  system.autoUpgrade.enable = true;
+  boot.loader.systemd-boot.consoleMode= "max";
+
   networking.firewall.allowedTCPPortRanges = [
     { from = 2999; to = 3001; }
     { from = 8000; to = 9000; }
@@ -164,6 +168,15 @@
   environment.systemPackages = with pkgs; [
      vim
      wget
+     gnomeExtensions.dash-to-panel
+     gnome.gnome-tweaks
+     jetbrains.idea-ultimate
+     google-chrome
+     kitty
+     yarn
+     nodejs_20
+     refind
+     efibootmgr
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
