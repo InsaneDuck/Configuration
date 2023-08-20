@@ -168,6 +168,7 @@
   environment.systemPackages = with pkgs; [
      android-tools
      bash-completion
+     chiaki
      efibootmgr
      fish
      github-desktop
@@ -175,7 +176,9 @@
      gnome.gnome-boxes
      gnome.gnome-tweaks
      gnome.sushi
+     gnomeExtensions.clipboard-indicator
      gnomeExtensions.dash-to-panel
+     gnomeExtensions.unite
      google-chrome
      gparted
      gradle
@@ -197,6 +200,7 @@
      pigz
      powerline-fonts
      refind
+     rpi-imager
      steam
      tree
      vim
@@ -207,6 +211,12 @@
      yarn-bash-completion
      youtube-dl
   ];
+
+  xdg.mime.defaultApplications = {
+    "application/pdf" = "firefox.desktop";
+    "inode/directory" = "org.gnome.Nautilus.desktop";
+    "video/mp4" = "vlc.desktop";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
