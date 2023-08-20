@@ -166,17 +166,46 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim
-     wget
-     gnomeExtensions.dash-to-panel
-     gnome.gnome-tweaks
-     jetbrains.idea-ultimate
-     google-chrome
-     kitty
-     yarn
-     nodejs_20
-     refind
+     android-tools
+     bash-completion
      efibootmgr
+     fish
+     github-desktop
+     gnome.dconf-editor
+     gnome.gnome-boxes
+     gnome.gnome-tweaks
+     gnome.sushi
+     gnomeExtensions.dash-to-panel
+     google-chrome
+     gparted
+     gradle
+     gthumb
+     jetbrains-mono
+     jetbrains.idea-ultimate
+     kitty
+     libappindicator
+     libreoffice-fresh
+     maven
+     mkvtoolnix
+     nautilus-open-any-terminal
+     neofetch
+     neovim
+     nix-bash-completions
+     nodejs_20
+     noto-fonts
+     noto-fonts-emoji
+     pigz
+     powerline-fonts
+     refind
+     steam
+     tree
+     vim
+     virt-manager
+     vlc
+     wget
+     yarn
+     yarn-bash-completion
+     youtube-dl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
