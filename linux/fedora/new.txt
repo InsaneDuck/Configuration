@@ -3,15 +3,17 @@ sudo dracut --force
 sudo cp -p /usr/share/X11/xorg.conf.d/nvidia.conf /etc/X11/xorg.conf.d/nvidia.conf
 sudo nano /etc/X11/xorg.conf.d/nvidia.conf
 glxinfo | egrep "OpenGL vendor|OpenGL renderer"
-sudo dnf install jetbrains-mono-fonts
 sudo dnf groupupdate core
 modinfo -F version nvidia
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install kde-connect
-sudo dnf install libappindicator-gtk3 gnome-tweaks gnome-shell-extension-appindicator
-sudo dnf install dnf-plugins-core
-sudo dnf install fedora-workstation-repositories
-sudo dnf install google-chrome-stable
+libappindicator-gtk3
+gnome-tweaks
+gnome-shell-extension-appindicator
+dnf-plugins-core
+fedora-workstation-repositories
+google-chrome-stable
+jetbrains-mono-fonts
 sudo dnf remove fedora-chromium-config
 sudo dnf autremove
 ssh satya@insaneduck-pi.local
