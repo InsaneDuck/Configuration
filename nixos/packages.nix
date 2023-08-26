@@ -67,5 +67,6 @@
          rustfmt
          rustycli
          clippy
+         gcolor3
       ];
 }
