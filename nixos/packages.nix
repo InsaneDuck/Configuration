@@ -6,18 +6,21 @@
     environment.systemPackages = with pkgs; [
          android-tools
          bash-completion
+         cargo
          chiaki
+         clippy
          docker
          efibootmgr
          fish
          gaphor
          gcc
+         gcolor3
          git
          github-desktop
          gnome-builder
-         gnome.gnome-chess
          gnome.dconf-editor
          gnome.gnome-boxes
+         gnome.gnome-chess
          gnome.gnome-tweaks
          gnome.sushi
          gnomeExtensions.clipboard-indicator
@@ -28,6 +31,7 @@
          gradle
          gthumb
          htop
+         jdk17
          jetbrains-mono
          jetbrains.idea-ultimate
          kitty
@@ -51,6 +55,10 @@
          qbittorrent
          refind
          rpi-imager
+         rust-analyzer
+         rustc
+         rustfmt
+         rustycli
          steam
          tree
          vim
@@ -60,13 +68,5 @@
          yarn
          yarn-bash-completion
          youtube-dl
-         jdk17
-         rustc
-         cargo
-         rust-analyzer
-         rustfmt
-         rustycli
-         clippy
-         gcolor3
       ];
 }
