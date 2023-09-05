@@ -109,6 +109,8 @@
   networking.firewall.allowedTCPPortRanges = [
     { from = 2999; to = 3001; }
     { from = 8000; to = 9000; }
+    { from = 1714; to = 1764; }
+
   ];
 
   hardware.nvidia = {

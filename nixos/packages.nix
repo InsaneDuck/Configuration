@@ -25,6 +25,7 @@
          gnome.sushi
          gnomeExtensions.clipboard-indicator
          gnomeExtensions.dash-to-panel
+         gnomeExtensions.gsconnect
          gnomeExtensions.unite
          google-chrome
          gparted
