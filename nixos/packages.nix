@@ -6,6 +6,7 @@
     environment.systemPackages = with pkgs; [
          android-tools
          bash-completion
+         bun
          cargo
          chiaki
          clippy
