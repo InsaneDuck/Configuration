@@ -32,6 +32,7 @@
          gparted
          gradle
          gthumb
+         godot_4
          htop
          jdk17
          jetbrains-mono
@@ -61,6 +62,7 @@
          rustc
          rustfmt
          rustycli
+        
          steam
          tree
          vim
