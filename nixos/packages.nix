@@ -28,11 +28,12 @@
          gnomeExtensions.dash-to-panel
          gnomeExtensions.gsconnect
          gnomeExtensions.unite
+         gnupg
+         godot_4
          google-chrome
          gparted
          gradle
          gthumb
-         godot_4
          htop
          jdk17
          jetbrains-mono
@@ -52,7 +53,10 @@
          noto-fonts-cjk-serif
          noto-fonts-emoji
          noto-fonts-lgc-plus
+         ntfs3g
+         openssh
          pigz
+         pinentry
          powerline-fonts
          python3
          qbittorrent
@@ -62,7 +66,6 @@
          rustc
          rustfmt
          rustycli
-        
          steam
          tree
          vim

@@ -8,24 +8,53 @@
       ./packages.nix
     ];
 
-  time.hardwareClockInLocalTime = true;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.consoleMode= "max";
 
-  networking.hostName = "insaneduck-nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.11"; # Did you read the comment?
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  networking.nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
-  networking.enableIPv6 = false;
-  # Enable networking
-  networking.networkmanager.enable = true;
+  time = {
+    hardwareClockInLocalTime = true;
+    # Set your time zone.
+    timeZone = "Europe/London";
+  };
 
-  # Set your time zone.
-  time.timeZone = "Europe/London";
+  # networking
+  networking = {
+    # Define your hostname.
+    hostName = "insaneduck-nixos";
+    nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+    enableIPv6 = false;
+    # Enable networking
+    networkmanager.enable = true;
+    # Open ports in the firewall.
+    firewall.allowedTCPPortRanges = [
+        { from = 2999; to = 3001; }
+        { from = 8000; to = 9000; }
+        { from = 1714; to = 1764; }
+    ];
+    # firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # firewall.enable = false;
+    # Enables wireless support via wpa_supplicant.
+    # wireless.enable = true;
+    # Configure network proxy if necessary
+    # proxy.default = "http://user:password@proxy:port/";
+    # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  };
+
+
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -49,19 +78,38 @@
     driSupport32Bit = true;
   };
 
+  hardware.nvidia = {
+    # Modesetting is needed for most Wayland compositors
+    modesetting.enable = true;
+    # Use the open source version of the kernel module (Only available on driver 515.43.04+)
+    open = false;
+    # Enable the nvidia settings menu
+    nvidiaSettings = true;
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    prime = {
+        sync.enable = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+  hardware.pulseaudio.enable = false;
+
   # Enable the X11 windowing system.
   services = {
     xserver ={
         enable = true;
-
         # Configure keymap in X11
         layout = "us";
         xkbVariant = "";
 
         # Enable the GNOME Desktop Environment.
-        displayManager.gdm.enable = true;
-        desktopManager.gnome.enable = true;
+        #displayManager.gdm.enable = true;
+        #desktopManager.gnome.enable = true;
 
+        # Enable the Plasma Desktop Environment.
+        displayManager.sddm.enable = true;
+        desktopManager.plasma5.enable = true;
         # Tell Xorg to use the nvidia driver (also valid for Wayland)
         videoDrivers = ["nvidia"];
     };
@@ -103,38 +151,6 @@
     };
   };
 
-
-  system.autoUpgrade.enable = true;
-  boot.loader.systemd-boot.consoleMode= "max";
-
-  networking.firewall.allowedTCPPortRanges = [
-    { from = 2999; to = 3001; }
-    { from = 8000; to = 9000; }
-    { from = 1714; to = 1764; }
-
-  ];
-
-  hardware.nvidia = {
-
-    # Modesetting is needed for most Wayland compositors
-    modesetting.enable = true;
-
-    # Use the open source version of the kernel module
-    # Only available on driver 515.43.04+
-    open = false;
-
-    # Enable the nvidia settings menu
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    prime = {
-    	sync.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-    };
-  };
-
   specialisation = {
     external-display.configuration = {
       system.nixos.tags = [ "external-display" ];
@@ -147,7 +163,7 @@
 
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
+
   security.rtkit.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -160,14 +176,15 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      kate
     ];
   };
   virtualisation.libvirtd.enable = true;
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+     allowUnfree = true;
+  };
 
-  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
 
   xdg.mime.defaultApplications = {
     "application/pdf" = "firefox.desktop";
@@ -188,18 +205,8 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+
+
 
 }
